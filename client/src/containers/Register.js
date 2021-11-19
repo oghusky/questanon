@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+// components
 import Form from 'react-bootstrap/Form';
 import TextInputs from '../components/TextInputs';
 import Buttons from '../components/Buttons';
+import { Helmet } from 'react-helmet';
+// API
 import API from '../API/API';
 export default function Register() {
+    const navigate = useNavigate();
     const [register, setRegister] = useState({
         password: '',
         email: '',
@@ -19,11 +23,12 @@ export default function Register() {
         e.preventDefault();
         const { email, password } = register;
         const response = await API.postRegister({ email, password });
-        console.log(response.data);
+        if (response.status === 201) navigate('/login');
     }
 
     return (
         <>
+            <Helmet><title>QuestAnon | Register</title></Helmet>
             <Form onSubmit={handleSubmit}>
                 <TextInputs
                     type={'email'}

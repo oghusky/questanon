@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from 'react-router-dom';
+// components
 import Form from "react-bootstrap/Form";
 import TextInputs from "../components/TextInputs";
 import Buttons from "../components/Buttons";
+import { Helmet } from 'react-helmet';
 // API
 import API from "../API/API";
 // context
@@ -39,6 +41,7 @@ export default function Login() {
 
     return (
         <>
+            <Helmet><title>QuestAnon | Login</title></Helmet>
             <Form onSubmit={handleSubmit}>
                 <TextInputs
                     type={'text'}
