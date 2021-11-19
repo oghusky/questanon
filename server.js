@@ -27,9 +27,6 @@ app.get("/config", (req, res) => {
 app.use("/", require('./routes/public-routes'));
 app.use('/auth', require('./routes/auth-routes'));
 app.use('/question', require('./routes/question-routes'));
-app.get("/*", (req, res) => {
-    return res.status(404).json({ msg: "Can not find what you are looking for" });
-});
 
 // index html route
 app.get("*", (req, res) => {
