@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // test route
 app.get("/config", (req, res) => {
@@ -30,7 +30,7 @@ app.use('/question', require('./routes/question-routes'));
 
 // index html route
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, 'build/index.html'));
+    res.sendFile(path.join(__dirname, '/client/build/index.html'));
 })
 
 app.listen(PORT, () => {
