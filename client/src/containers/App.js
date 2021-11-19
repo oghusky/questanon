@@ -4,6 +4,7 @@ import {
   Route
 } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import './App.css';
 // containers
 import Navigation from '../components/Navigation';
@@ -36,6 +37,9 @@ function App() {
 
   return (
     <Router>
+      <Helmet>
+        <title>QuestAnon</title>
+      </Helmet>
       <AppContext.Provider value={state}>
         <Navigation />
         <Routes>
