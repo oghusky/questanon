@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-    Question = new mongoose.Schema({
+    Comment = new mongoose.Schema({
         author: {
             id: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -12,12 +12,10 @@ const mongoose = require('mongoose'),
             required: true,
             trim: true
         },
-        comments: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Comment"
-            }
-        ]
+        questionId: {
+            type: String,
+            required: true
+        }
     }, { timestamps: true });
 
-module.exports = mongoose.model("Question", Question);
+module.exports = mongoose.model("Comment", Comment);

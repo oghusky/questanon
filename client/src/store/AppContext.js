@@ -8,7 +8,9 @@ const AppContext = React.createContext({
     questions: [],
     setQuestions: () => { },
     appMsg: "",
-    setAppMsg: () => { }
-})
+    setAppMsg: () => { },
+    comments: [],
+    setComments: () => { }
+});
 
 export default AppContext;

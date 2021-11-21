@@ -12,6 +12,7 @@ import Welcome from './Welcome';
 import Login from '../containers/Login';
 import Register from '../containers/Register';
 import Questions from './Questions';
+import Comments from './Comments';
 // context
 import AppContext from '../store/AppContext';
 function App() {
@@ -19,10 +20,12 @@ function App() {
   const [user, setUser] = useState({});
   const [jwt, setJwt] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [comments, setComments] = useState([]);
   const state = {
     user, setUser,
     jwt, setJwt,
-    questions, setQuestions
+    questions, setQuestions,
+    comments, setComments,
   };
   // useeffect
   useEffect(() => {
@@ -47,6 +50,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/question" element={<Questions />} />
+          <Route exact path="/questionid_:questionId" element={<Comments />} />
         </Routes>
       </AppContext.Provider>
     </Router>

@@ -32,7 +32,7 @@ const API = {
                 headers: {
                     authorization: jwt
                 }
-            })
+            });
         } catch (err) {
             console.log(err);
         }
@@ -43,7 +43,40 @@ const API = {
                 headers: {
                     authorization: jwt
                 }
-            })
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    postComment: async (questId, commentInfo, jwt) => {
+        try {
+            return axios.post(`/comment/questionid_${questId}`, commentInfo, {
+                headers: {
+                    authorization: jwt
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    getComment: async (questId, jwt) => {
+        try {
+            return axios.get(`/comment/questionid_${questId}`, {
+                headers: {
+                    authorization: jwt
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    deleteComment: async (commentId, questId, jwt) => {
+        try {
+            return axios.delete(`/comment/commentid_${questId}/${commentId}`, {
+                headers: {
+                    authorization: jwt
+                }
+            });
         } catch (err) {
             console.log(err);
         }

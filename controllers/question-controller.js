@@ -1,4 +1,5 @@
-const Question = require('../models/Question');
+const Question = require('../models/Question'),
+    Comment = require('../models/Comment');
 
 exports.postQuestion = async (req, res) => {
     let name = "";
@@ -34,12 +35,15 @@ exports.getQuestions = async (req, res) => {
     }
 }
 
+exports.getQuestionById = async (req, res) => { }
+
 exports.deleteQuestions = async (req, res) => {
+    const { id } = req.params;
     try {
-        const { id } = req.params;
         const question = await Question.findOne({ _id: id });
         if (String(req.token.id) === String(question.author.id) || req.token.isAdmin) {
-            await question.remove()
+            await question.remove();
+            await Comment.deleteMany({ questionId: id });
             return res.status(200).json({ msg: "Question deleted" });
         } else return res.status(403).json({ msg: "You aren't authorized to do that" });
     } catch (e) {

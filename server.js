@@ -27,6 +27,7 @@ app.get("/config", (req, res) => {
 app.use("/", require('./routes/public-routes'));
 app.use('/auth', require('./routes/auth-routes'));
 app.use('/question', require('./routes/question-routes'));
+app.use('/comment', require('./routes/comment-routes'));
 
 // index html route
 app.get("*", (req, res) => {

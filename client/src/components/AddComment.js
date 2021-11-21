@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import TextInputs from "../components/TextInputs";
 import Buttons from "../components/Buttons";
@@ -6,20 +7,24 @@ import Buttons from "../components/Buttons";
 import API from "../API/API";
 // context
 import AppContext from "../store/AppContext";
-export default function AddQuestion() {
-    const { jwt, setQuestions } = useContext(AppContext);
-    const [questText, setQuestText] = useState("");
+
+export default function AddComment() {
+    const { questionId } = useParams();
+    const { jwt, setComments } = useContext(AppContext);
+    const [commentText, setCommentText] = useState("");
     const [isAnon, setIsAnon] = useState(true);
     const handleUserInputChange = event => {
         const { name, value } = event.target;
-        setQuestText({ ...questText, [name]: value });
+        setCommentText({ ...commentText, [name]: value });
     }
     const handleSubmit = async e => {
         e.preventDefault();
         try {
-            await API.postQuestion({ questText, isAnon }, jwt)
-            const response = await API.getQuestions(jwt);
-            setQuestions(response.data.questions);
+            const post = await API.postComment(questionId, { commentText, isAnon }, jwt);
+            if (post.status === 201) {
+                const response = await API.getComment(questionId, jwt);
+                setComments(response.data.comments);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -28,13 +33,13 @@ export default function AddQuestion() {
         return !value;
     }
     return (
-        <Form onSubmit={handleSubmit} className="p-3">
+        <Form onSubmit={handleSubmit}>
             <TextInputs
                 type={'text'}
                 id={'questText'}
                 name={'text'}
-                label={'Submit Question'}
-                placeholder={"Here's my question: "}
+                label={'Submit Comment'}
+                placeholder={"Here's my comment: "}
                 onChange={handleUserInputChange}
             />
             <div className='d-flex justify-content-between my-3'>

@@ -21,7 +21,7 @@ export default function Questions() {
 
     return (
         <div>
-            <Helmet><title>QuestAnon | {user?.realName ?? null}'s Questions</title></Helmet>
+            <Helmet><title>QuestAnon | Questions</title></Helmet>
             <AddQuestion />
             {questions.map(item => (
                 <Question item={item} key={item._id} />
