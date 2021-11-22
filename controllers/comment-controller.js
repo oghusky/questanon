@@ -42,9 +42,10 @@ exports.deleteCommentByCommentId = async (req, res) => {
         const comment = await Comment.findOne({ _id: commentId });
         const question = await Question.findOne({ _id: questionId });
         if (String(req.token.id) === String(comment.author.id)) {
-            const commentList = await question.comments.filter(item => item === comment._id);
+            console.log(comment._id);
+            const commentList = await question.comments.filter(item => String(item) !== String(comment._id));
             question.comments = commentList;
-            question.save();
+            await question.save();
             await comment.remove();
             return res.status(200).json({ msg: "Comment deleted" });
         }
