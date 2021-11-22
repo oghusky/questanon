@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // components
 import Form from 'react-bootstrap/Form';
@@ -7,7 +7,10 @@ import Buttons from '../components/Buttons';
 import { Helmet } from 'react-helmet';
 // API
 import API from '../API/API';
+// context
+import AppContext from '../store/AppContext';
 export default function Register() {
+    const { setAppMsg } = useContext(AppContext);
     const navigate = useNavigate();
     const [register, setRegister] = useState({
         password: '',
@@ -23,12 +26,18 @@ export default function Register() {
         e.preventDefault();
         const { email, password } = register;
         const response = await API.postRegister({ email, password });
-        if (response.status === 201) navigate('/login');
+        if (response.status === 201) {
+            setAppMsg({ show: true, variant: "success", text: "Registration success!" });
+            navigate('/login');
+        } else {
+            setAppMsg({ show: true, variant: "danger", text: "Somthing went wrong. Try again." });
+        }
     }
 
     return (
         <>
             <Helmet><title>QuestAnon | Register</title></Helmet>
+            <h3 className="text-center">REGISTER</h3>
             <Form onSubmit={handleSubmit}>
                 <TextInputs
                     type={'email'}

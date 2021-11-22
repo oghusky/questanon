@@ -7,8 +7,8 @@ import API from "../API/API";
 // context
 import AppContext from "../store/AppContext";
 export default function AddQuestion() {
-    const { jwt, setQuestions } = useContext(AppContext);
-    const [questText, setQuestText] = useState("");
+    const { jwt, setQuestions, setAppMsg } = useContext(AppContext);
+    const [questText, setQuestText] = useState({ text: "" });
     const [isAnon, setIsAnon] = useState(true);
     const handleUserInputChange = event => {
         const { name, value } = event.target;
@@ -16,23 +16,31 @@ export default function AddQuestion() {
     }
     const handleSubmit = async e => {
         e.preventDefault();
-        try {
-            await API.postQuestion({ questText, isAnon }, jwt)
-            const response = await API.getQuestions(jwt);
-            setQuestions(response.data.questions);
-        } catch (e) {
-            console.log(e);
+        if (questText.text) {
+            try {
+                await API.postQuestion({ questText, isAnon }, jwt)
+                const response = await API.getQuestions(jwt);
+                setQuestions(response.data.questions);
+                setAppMsg({ show: true, variant: "success", text: "Question added" });
+            } catch (e) {
+                setAppMsg({ show: true, variant: "danger", text: "Something went wrong. Try again." });
+                console.log(e);
+            }
+        } else {
+            setAppMsg({ show: true, variant: "warning", text: "Text field required. Try again." })
         }
+        setQuestText({ text: "" })
     }
     const toggleIsAnon = value => {
         return !value;
     }
     return (
-        <Form onSubmit={handleSubmit} className="p-3">
+        <Form onSubmit={handleSubmit}>
             <TextInputs
                 type={'text'}
                 id={'questText'}
                 name={'text'}
+                value={questText.text}
                 label={'Submit Question'}
                 placeholder={"Here's my question: "}
                 onChange={handleUserInputChange}
@@ -57,7 +65,7 @@ export default function AddQuestion() {
                     variant={'primary'}
                     btnText={'SUBMIT'}
                     btnAlign={'text-end'}
-                    size={''}
+                    size={'sm'}
                     type={'submit'}
                 />
             </div>

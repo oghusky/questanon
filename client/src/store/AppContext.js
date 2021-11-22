@@ -7,10 +7,10 @@ const AppContext = React.createContext({
     setUser: () => { },
     questions: [],
     setQuestions: () => { },
-    appMsg: "",
-    setAppMsg: () => { },
     comments: [],
-    setComments: () => { }
+    setComments: () => { },
+    appMsg: {},
+    setAppMsg: () => { }
 });
 
 export default AppContext;

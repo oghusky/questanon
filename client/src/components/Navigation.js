@@ -9,15 +9,16 @@ import Container from 'react-bootstrap/Container';
 
 export default function Navigation() {
     const navigate = useNavigate();
-    const { user, setUser, setJwt } = useContext(AppContext);
+    const { user, setUser, setJwt, setAppMsg } = useContext(AppContext);
     const handleLogout = async () => {
         localStorage.setItem("QA_User", "");
         setUser({});
         setJwt("");
+        setAppMsg({ show: true, variant: "primary", text: "See you next time!" })
         navigate('/login');
     }
     return (
-        <Navbar className="navbar navbar-expand-md navbar-light bg-light">
+        <Navbar bg="light" expand="lg">
             <Container>
                 <Link className="navbar-brand" to="/question">QuestAnon</Link>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

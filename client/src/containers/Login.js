@@ -10,7 +10,7 @@ import API from "../API/API";
 // context
 import AppContext from "../store/AppContext";
 export default function Login() {
-    const { setQuestions, setJwt, setUser } = useContext(AppContext);
+    const { setQuestions, setJwt, setUser, setAppMsg } = useContext(AppContext);
     const navigate = useNavigate();
     const [login, setLogin] = useState({
         password: '',
@@ -36,12 +36,16 @@ export default function Login() {
             setJwt(response.data.token);
             setUser(response.data.user);
             navigate('/question');
+            setAppMsg({ show: true, variant: "success", text: "Welcome!" });
+        } else {
+            setAppMsg({ show: true, variant: "danger", text: "Your info doesn't match. Try again." });
         }
     }
 
     return (
         <>
             <Helmet><title>QuestAnon | Login</title></Helmet>
+            <h3 className="text-center">LOGIN</h3>
             <Form onSubmit={handleSubmit}>
                 <TextInputs
                     type={'text'}

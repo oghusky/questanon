@@ -9,25 +9,32 @@ import API from "../API/API";
 import AppContext from "../store/AppContext";
 
 export default function AddComment() {
-    const { questionId } = useParams();
-    const { jwt, setComments } = useContext(AppContext);
-    const [commentText, setCommentText] = useState("");
+    const { jwt, setComments, setAppMsg } = useContext(AppContext);
+    const [commentText, setCommentText] = useState({ text: "" });
     const [isAnon, setIsAnon] = useState(true);
+    const { questionId } = useParams();
     const handleUserInputChange = event => {
         const { name, value } = event.target;
         setCommentText({ ...commentText, [name]: value });
     }
     const handleSubmit = async e => {
         e.preventDefault();
-        try {
-            const post = await API.postComment(questionId, { commentText, isAnon }, jwt);
-            if (post.status === 201) {
-                const response = await API.getComment(questionId, jwt);
-                setComments(response.data.comments);
+        if (commentText.text) {
+            try {
+                const post = await API.postComment(questionId, { commentText, isAnon }, jwt);
+                if (post.status === 201) {
+                    const response = await API.getComment(questionId, jwt);
+                    setComments(response.data.comments);
+                    setAppMsg({ show: true, variant: "success", text: "Comment added!" });
+                }
+            } catch (e) {
+                setAppMsg({ show: true, variant: "danger", text: "Something went wrong. Try again." });
+                console.log(e);
             }
-        } catch (e) {
-            console.log(e);
+        } else {
+            setAppMsg({ show: true, variant: "warning", text: "Text field required. Try again." })
         }
+        setCommentText({ text: "" });
     }
     const toggleIsAnon = value => {
         return !value;
@@ -38,6 +45,7 @@ export default function AddComment() {
                 type={'text'}
                 id={'questText'}
                 name={'text'}
+                value={commentText.text}
                 label={'Submit Comment'}
                 placeholder={"Here's my comment: "}
                 onChange={handleUserInputChange}
@@ -62,7 +70,7 @@ export default function AddComment() {
                     variant={'primary'}
                     btnText={'SUBMIT'}
                     btnAlign={'text-end'}
-                    size={''}
+                    size={'sm'}
                     type={'submit'}
                 />
             </div>

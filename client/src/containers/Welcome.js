@@ -5,6 +5,7 @@ export default function Welcome() {
     return (
         <div id="welcome">
             <Helmet><title>QuestAnon | Welcome</title></Helmet>
+            <h3 className="text-center">Welcome to QuestAnon</h3>
             <Link className="btn btn-primary" to='/register'>Register</Link>
             <br />
             <br />
