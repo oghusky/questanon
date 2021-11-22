@@ -15,7 +15,7 @@ code {
 form,
 .question-item,
 .alert{
-  width: 70%;
+  width: 50%;
   margin: 0 auto;
 }
 .alert{
@@ -38,9 +38,23 @@ p small{
 }
 div.question-item{
   background-color: #fff;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 1rem;
+  border-radius: 7px;
 }
 p.post-text{
   background-color: #f5f5f5;
   color: #212121;
   border-radius: 7px;
+}
+hr{
+  margin: 0.5rem 0 !important;
+}
+@media screen and (max-width: 426px){
+  form,
+  .question-item,
+  .alert{
+    width: 90%;
+    margin: 0 auto;
+  }
 }

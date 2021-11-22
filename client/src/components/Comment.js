@@ -24,6 +24,7 @@ export default function Comment({ item, questionId }) {
             <p className="mb-0"><b>{item.author.name.replace(/[^A-Z0-9]/ig, "_").split("__")[0].replace(/[^A-Z0-9]/ig, "").toUpperCase()}</b></p>
             <p className="mb-0"><small><i>{item.createdAt}</i></small></p>
             <p className="my-3 post-text p-2">{item.text}</p>
+            <hr />
             {user && user.id === item.author.id ?
                 (<button
                     className="btn btn-sm btn-outline-danger"
@@ -32,7 +33,6 @@ export default function Comment({ item, questionId }) {
                 </button>)
                 : null
             }
-            <hr />
         </div>
     )
 }

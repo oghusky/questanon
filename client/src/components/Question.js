@@ -24,6 +24,7 @@ export default function Question({ item }) {
             <p className="mb-0"><b>{item.author.name.replace(/[^A-Z0-9]/ig, "_").split("__")[0].replace(/[^A-Z0-9]/ig, "").toUpperCase()}</b></p>
             <p className="mb-0"><small><i>{item.createdAt}</i></small></p>
             <p className="my-3 post-text p-2">{item.text}</p>
+            <hr />
             <div className="d-flex justify-content-between">
                 <Link to={`/questionid_${item._id}`}>
                     {item.comments.length} - {item.comments.length === 1 ? 'Comment' : 'Comments'}
@@ -33,7 +34,6 @@ export default function Question({ item }) {
                     onClick={() => handleDelete(item._id)}
                 >DELETE
                 </button>
-                <hr />
             </div>
         </div>
     )
