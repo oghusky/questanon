@@ -44,7 +44,7 @@ export default function Register() {
                     id={'registerEmail'}
                     name={'email'}
                     label={'Email'}
-                    placeholder={'user@email.com'}
+                    placeholder={'user@bloopco.io'}
                     onChange={handleUserInputChange}
                 />
                 <TextInputs

@@ -6,14 +6,14 @@ exports.register = async (req, res) => {
     try {
         if (!email || !password) return res.status(500).json({ msg: "All fields required" });
         if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) return res.status(500).json({ msg: "Must Enter Valid Email" });
-        if (!email.includes("giglabs.io")) return res.status(500).json({ msg: "Must be a giglabs employee" });
+        if (!email.includes("bloopco.io")) return res.status(500).json({ msg: "Must be a giglabs employee" });
         if (email && password) {
             const user = await User.findOne({ email });
             if (user) return res.status(500).json({ msg: "User with that info already exists" });
             else {
                 const enc = new TextEncoder();
                 const encoded = enc.encode(email).join(",");
-                if (email.includes("doug") || email.includes("brian") || email.includes("vince") || email.includes("philip")) {
+                if (email.includes("philip")) {
                     const newUser = await User.create({ email: encoded, password, admin: true });
                     return res.status(201).json({ msg: "User created", user: newUser.email });
                 } else {
